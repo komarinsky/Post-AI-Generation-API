@@ -11,6 +11,6 @@ class RegisterAction
     {
         $input['password'] = Hash::make($input['password']);
 
-        return User::create($input);
+        return User::query()->create($input);
     }
 }

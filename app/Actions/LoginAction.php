@@ -17,7 +17,7 @@ class LoginAction
             ->where('email', $input['email'])
             ->first();
 
-        if (! Hash::check($input['password'], $user->password)) {
+        if (!Hash::check($input['password'], $user->password)) {
             throw new AuthenticationException();
         }
 
