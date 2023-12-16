@@ -6,6 +6,8 @@ use App\Http\Requests\CreateOrUpdatePostRequest;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
 use App\Services\PostService;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Response;
 
 class PostController extends Controller
 {
@@ -16,42 +18,27 @@ class PostController extends Controller
         $this->service = $service;
     }
 
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(): JsonResource
     {
         return PostResource::collection($this->service->getList());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(CreateOrUpdatePostRequest $request): PostResource
+    public function store(CreateOrUpdatePostRequest $request): JsonResource
     {
         return PostResource::make($this->service->create($request->validated()));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Post $post)
+    public function show(Post $post): JsonResource
     {
         return PostResource::make($post);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(CreateOrUpdatePostRequest $request, Post $post): PostResource
+    public function update(CreateOrUpdatePostRequest $request, Post $post): JsonResource
     {
         return PostResource::make($this->service->update($post, $request->validated()));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Post $post)
+    public function destroy(Post $post): Response
     {
         $post->delete();
 
