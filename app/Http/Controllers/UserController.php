@@ -16,8 +16,6 @@ class UserController extends Controller
 
     public function index(): JsonResource
     {
-        $users = User::with('posts')->paginate();
-
-        return UserResource::collection($users);
+        return UserResource::collection(User::paginate());
     }
 }
