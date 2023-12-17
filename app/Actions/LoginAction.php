@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Support\Facades\Hash;
 
-class LoginAction
+final class LoginAction
 {
     /**
      * @throws AuthenticationException

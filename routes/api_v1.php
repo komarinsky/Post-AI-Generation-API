@@ -16,20 +16,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('register', [AuthController::class, 'register']);
-Route::post('login', [AuthController::class, 'login']);
+Route::middleware(['api'])->group(function () {
+    Route::post('register', [AuthController::class, 'register']);
+    Route::get('email/verify/{id}', [AuthController::class, 'verify'])->name('verification.verify');
+    Route::post('login', [AuthController::class, 'login']);
 
-Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('me', [UserController::class, 'getMe']);
-    Route::get('users', [UserController::class, 'index']);
+    Route::middleware(['auth:sanctum'])->group(function () {
+        Route::get('me', [UserController::class, 'getMe']);
+        Route::get('users', [UserController::class, 'index']);
 
-    Route::prefix('post')->group(function () {
-        Route::controller(PostController::class)->group(function () {
-            Route::get('/', 'index');
-            Route::post('/', 'store');
-            Route::post('{Post}', 'show');
-            Route::post('{Post}', 'update');
-            Route::post('{Post}', 'destroy');
+        Route::prefix('post')->group(function () {
+            Route::controller(PostController::class)->group(function () {
+                Route::get('/', 'index');
+                Route::post('/', 'store');
+                Route::post('{Post}', 'show');
+                Route::post('{Post}', 'update');
+                Route::post('{Post}', 'destroy');
+            });
         });
     });
 });
