@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Services\Contracts\RegisterUserInterface;
+use App\Services\RegisterUserEmailService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -16,6 +18,10 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(TelescopeServiceProvider::class);
         }
     }
+
+    public array $bindings = [
+        RegisterUserInterface::class => RegisterUserEmailService::class,
+    ];
 
     /**
      * Bootstrap any application services.
