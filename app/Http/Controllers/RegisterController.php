@@ -15,8 +15,7 @@ class RegisterController extends Controller
 {
     public function __construct(
         private readonly RegisterUserInterface $service,
-    ) {
-    }
+    ) {}
 
     public function register(RegisterUserRequest $request): JsonResource
     {
