@@ -11,11 +11,9 @@ use Illuminate\Http\Response;
 
 class PostController extends Controller
 {
-    private PostService $service;
-
-    public function __construct(PostService $service)
-    {
-        $this->service = $service;
+    public function __construct(
+        private readonly PostService $service,
+    ) {
     }
 
     public function index(): JsonResource

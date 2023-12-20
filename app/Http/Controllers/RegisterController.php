@@ -13,11 +13,9 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class RegisterController extends Controller
 {
-    private RegisterUserInterface $service;
-
-    public function __construct(RegisterUserInterface $registerUser)
-    {
-        $this->service = $registerUser;
+    public function __construct(
+        private readonly RegisterUserInterface $service,
+    ) {
     }
 
     public function register(RegisterUserRequest $request): JsonResource
