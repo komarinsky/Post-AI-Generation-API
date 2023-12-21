@@ -27,16 +27,20 @@ class PostController extends Controller
 
     public function show(Post $post): JsonResource
     {
-        return PostResource::make($post);
+        return PostResource::make($post->load(['user']));
     }
 
     public function update(CreateOrUpdatePostRequest $request, Post $post): JsonResource
     {
+        $this->authorize('update', $post);
+
         return PostResource::make($this->service->update($post, $request->validated()));
     }
 
     public function destroy(Post $post): Response
     {
+        $this->authorize('destroy', $post);
+
         $post->delete();
 
         return response()->noContent();

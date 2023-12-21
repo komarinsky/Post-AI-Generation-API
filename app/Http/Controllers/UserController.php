@@ -18,4 +18,9 @@ class UserController extends Controller
     {
         return UserResource::collection(User::paginate());
     }
+
+    public function show(User $user): JsonResource
+    {
+        return UserResource::make($user->load(['posts']));
+    }
 }

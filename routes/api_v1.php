@@ -27,15 +27,21 @@ Route::middleware(['api'])->group(function () {
 
     Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('me', [UserController::class, 'getMe']);
-        Route::get('users', [UserController::class, 'index']);
 
-        Route::prefix('post')->group(function () {
+        Route::prefix('users')->group(function () {
+            Route::controller(UserController::class)->group(function () {
+                Route::get('/', 'index');
+                Route::get('{user}', 'show');
+            });
+        });
+
+        Route::prefix('posts')->group(function () {
             Route::controller(PostController::class)->group(function () {
                 Route::get('/', 'index');
                 Route::post('/', 'store');
-                Route::post('{Post}', 'show');
-                Route::post('{Post}', 'update');
-                Route::post('{Post}', 'destroy');
+                Route::get('{post}', 'show');
+                Route::put('{post}', 'update');
+                Route::delete('{post}', 'destroy');
             });
         });
     });

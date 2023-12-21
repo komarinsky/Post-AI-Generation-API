@@ -21,6 +21,6 @@ final class PostService
 
     public function getList()
     {
-        return Post::paginate(request()?->per_page);
+        return Post::with(['user'])->paginate(request()?->per_page);
     }
 }
