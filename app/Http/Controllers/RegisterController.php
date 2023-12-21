@@ -22,6 +22,11 @@ class RegisterController extends Controller
         return UserResource::make($this->service->register($request->validated()));
     }
 
+    public function reSend(ResendEmailRequest $request)
+    {
+        $this->service->reSend($request->email);
+    }
+
     /**
      * @throws AuthenticationException
      */
@@ -34,10 +39,5 @@ class RegisterController extends Controller
         $this->service->verify($user_id);
 
         return redirect()->to('/');
-    }
-
-    public function reSend(ResendEmailRequest $request)
-    {
-        $this->service->reSend($request->email);
     }
 }

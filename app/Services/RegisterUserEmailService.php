@@ -22,15 +22,6 @@ final class RegisterUserEmailService implements RegisterUserInterface
         return $user;
     }
 
-    public function verify(int|string $userId): void
-    {
-        $user = User::findOrFail($userId);
-
-        if (! $user->hasVerifiedEmail()) {
-            $user->markEmailAsVerified();
-        }
-    }
-
     public function reSend(string $email): void
     {
         $user = User::whereEmail($email)->firstOrFail();
@@ -40,5 +31,14 @@ final class RegisterUserEmailService implements RegisterUserInterface
         }
 
         SendRegistrationEmail::dispatch($user);
+    }
+
+    public function verify(int|string $userId): void
+    {
+        $user = User::findOrFail($userId);
+
+        if (! $user->hasVerifiedEmail()) {
+            $user->markEmailAsVerified();
+        }
     }
 }
