@@ -27,7 +27,7 @@ class RegisterController extends Controller
      */
     public function verify(Request $request, $user_id): RedirectResponse
     {
-        if (!$request->hasValidSignature()) {
+        if (! $request->hasValidSignature()) {
             throw new AuthenticationException();
         }
 

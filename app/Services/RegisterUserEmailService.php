@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Jobs\SendRegistrationEmail;
 use App\Models\User;
 use App\Services\Contracts\RegisterUserInterface;
 use Illuminate\Auth\Events\Registered;
@@ -16,7 +17,7 @@ final class RegisterUserEmailService implements RegisterUserInterface
 
         $user = User::query()->create($input);
 
-        event(new Registered($user));
+        SendRegistrationEmail::dispatch($user);
 
         return $user;
     }
@@ -25,7 +26,7 @@ final class RegisterUserEmailService implements RegisterUserInterface
     {
         $user = User::findOrFail($userId);
 
-        if (!$user->hasVerifiedEmail()) {
+        if (! $user->hasVerifiedEmail()) {
             $user->markEmailAsVerified();
         }
     }
@@ -38,6 +39,6 @@ final class RegisterUserEmailService implements RegisterUserInterface
             throw new AlreadyInitializedException();
         }
 
-        $user->sendEmailVerificationNotification();
+        SendRegistrationEmail::dispatch($user);
     }
 }
