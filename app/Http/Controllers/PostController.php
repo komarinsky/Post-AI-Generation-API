@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Actions\UpdateModelLikeAction;
-use App\Http\Requests\CreateOrUpdatePostRequest;
+use App\Http\Requests\CreatePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
 use App\Services\PostService;
@@ -22,7 +23,7 @@ class PostController extends Controller
         return PostResource::collection($this->service->getList());
     }
 
-    public function store(CreateOrUpdatePostRequest $request): JsonResource
+    public function store(CreatePostRequest $request): JsonResource
     {
         return PostResource::make($this->service->create($request->validated()));
     }
@@ -32,7 +33,7 @@ class PostController extends Controller
         return PostResource::make($post->load(['user'])->loadCount(['likes'])->append(['is_liked']));
     }
 
-    public function update(CreateOrUpdatePostRequest $request, Post $post): JsonResource
+    public function update(UpdatePostRequest $request, Post $post): JsonResource
     {
         $this->authorize('update', $post);
 

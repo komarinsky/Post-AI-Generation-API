@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Post;
 use App\QueryBuilders\SortByMostLikeable;
+use App\Services\AI\ArticleService;
 use Illuminate\Support\Facades\Auth;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
@@ -13,6 +14,10 @@ final class PostService
 {
     public function create(array $input): Post
     {
+        if (! $input['description']) {
+            $input['description'] = (new ArticleService())->generateArticle($input['title']);
+        }
+
         return Auth::user()->posts()->create($input);
     }
 
