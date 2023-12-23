@@ -9,7 +9,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class SendRegistrationEmail implements ShouldQueue
+class SendRegistrationEmailJob implements ShouldQueue
 {
     use Dispatchable;
     use InteractsWithQueue;

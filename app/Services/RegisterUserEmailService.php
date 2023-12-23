@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Jobs\SendRegistrationEmail;
+use App\Jobs\SendRegistrationEmailJob;
 use App\Models\User;
 use App\Services\Contracts\RegisterUserInterface;
 use Illuminate\Auth\Events\Registered;
@@ -17,7 +17,7 @@ final class RegisterUserEmailService implements RegisterUserInterface
 
         $user = User::query()->create($input);
 
-        SendRegistrationEmail::dispatch($user);
+        SendRegistrationEmailJob::dispatch($user);
 
         return $user;
     }
@@ -30,7 +30,7 @@ final class RegisterUserEmailService implements RegisterUserInterface
             throw new AlreadyInitializedException();
         }
 
-        SendRegistrationEmail::dispatch($user);
+        SendRegistrationEmailJob::dispatch($user);
     }
 
     public function verify(int|string $userId): void
