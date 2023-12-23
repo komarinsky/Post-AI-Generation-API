@@ -18,6 +18,8 @@ class PostResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
+            'is_liked' => $this->whenAppended('is_liked'),
+            'likes_count' => $this->whenCounted('likes'),
             'user' => UserResource::make($this->whenLoaded('user')),
         ];
     }

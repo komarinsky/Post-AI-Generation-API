@@ -3,7 +3,11 @@
 namespace App\Services;
 
 use App\Models\Post;
+use App\QueryBuilders\SortByMostLikeable;
 use Illuminate\Support\Facades\Auth;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedSort;
+use Spatie\QueryBuilder\QueryBuilder;
 
 final class PostService
 {
@@ -21,6 +25,15 @@ final class PostService
 
     public function getList()
     {
-        return Post::with(['user'])->paginate(request()?->per_page);
+        $mostLikeable = AllowedSort::custom('most-likeable', new SortByMostLikeable());
+
+        return QueryBuilder::for(Post::class)
+            ->allowedFilters([
+                AllowedFilter::scope('search'),
+            ])
+            ->allowedSorts($mostLikeable)
+            ->with(['user'])
+            ->withLikes()
+            ->paginate(request()->per_page);
     }
 }

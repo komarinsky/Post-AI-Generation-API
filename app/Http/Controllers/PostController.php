@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\UpdateModelLikeAction;
 use App\Http\Requests\CreateOrUpdatePostRequest;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
 use App\Services\PostService;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class PostController extends Controller
 {
@@ -27,7 +29,7 @@ class PostController extends Controller
 
     public function show(Post $post): JsonResource
     {
-        return PostResource::make($post->load(['user']));
+        return PostResource::make($post->load(['user'])->loadCount(['likes'])->append(['is_liked']));
     }
 
     public function update(CreateOrUpdatePostRequest $request, Post $post): JsonResource
@@ -44,5 +46,10 @@ class PostController extends Controller
         $post->delete();
 
         return response()->noContent();
+    }
+
+    public function updateLike(UpdateModelLikeAction $action, Post $post): JsonResponse
+    {
+        return response()->json(['likes_count' => $action($post)]);
     }
 }

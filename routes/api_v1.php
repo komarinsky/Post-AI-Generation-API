@@ -42,6 +42,7 @@ Route::middleware(['api'])->group(function () {
                 Route::get('{post}', 'show');
                 Route::put('{post}', 'update');
                 Route::delete('{post}', 'destroy');
+                Route::put('{post}/like', 'updateLike');
             });
         });
     });
