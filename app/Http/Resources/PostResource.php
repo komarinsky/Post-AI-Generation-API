@@ -21,6 +21,7 @@ class PostResource extends JsonResource
             'is_liked' => $this->whenAppended('is_liked'),
             'likes_count' => $this->whenCounted('likes'),
             'user' => UserResource::make($this->whenLoaded('user')),
+            'media' => MediaResource::collection($this->whenLoaded('media')),
         ];
     }
 }

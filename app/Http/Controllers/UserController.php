@@ -2,16 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Media\StoreMediaRequest;
+use App\Http\Resources\MediaResource;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use App\Services\MediaService;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    public function __construct(
+        private readonly MediaService $mediaService,
+    ) {}
+
     public function getMe(): JsonResource
     {
-        return UserResource::make(Auth::user());
+        return UserResource::make(Auth::user()->load('media'));
     }
 
     public function index(): JsonResource
@@ -21,6 +28,11 @@ class UserController extends Controller
 
     public function show(User $user): JsonResource
     {
-        return UserResource::make($user->load(['posts']));
+        return UserResource::make($user->load(['posts', 'media']));
+    }
+
+    public function storeMedia(StoreMediaRequest $request)
+    {
+        return MediaResource::make($this->mediaService->store(auth()->user(), $request->validated()));
     }
 }

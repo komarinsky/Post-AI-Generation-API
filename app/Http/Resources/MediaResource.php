@@ -4,8 +4,9 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
-class UserResource extends JsonResource
+class MediaResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,10 +17,9 @@ class UserResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'email' => $this->email,
-            'posts' => PostResource::collection($this->whenLoaded('posts')),
-            'media' => MediaResource::collection($this->whenLoaded('media')),
+            'title' => $this->title,
+            'description' => $this->description,
+            'path' => Storage::url($this->path),
         ];
     }
 }

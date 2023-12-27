@@ -12,7 +12,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 final class PostService
 {
-    public function create(array $input): Post
+    public function store(array $input): Post
     {
         if (! $input['description']) {
             $input['description'] = (new ArticleService())->generateArticle($input['title']);
