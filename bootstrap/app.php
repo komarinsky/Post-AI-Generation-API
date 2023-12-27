@@ -2,7 +2,7 @@
 
 /*
 |--------------------------------------------------------------------------
-| Create The Application
+| Create The Post-AI-Generation-API
 |--------------------------------------------------------------------------
 |
 | The first thing we will do is create a new Laravel application instance
@@ -43,7 +43,7 @@ $app->singleton(
 
 /*
 |--------------------------------------------------------------------------
-| Return The Application
+| Return The Post-AI-Generation-API
 |--------------------------------------------------------------------------
 |
 | This script returns the application instance. The instance is given to
