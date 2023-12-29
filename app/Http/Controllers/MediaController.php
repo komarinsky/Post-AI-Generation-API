@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Media\StoreMediaRequest;
 use App\Http\Requests\Media\UpdateMediaRequest;
 use App\Http\Resources\MediaResource;
 use App\Models\Media;
@@ -13,7 +12,7 @@ use Illuminate\Http\Response;
 class MediaController extends Controller
 {
     public function __construct(
-        private MediaService $service,
+        private readonly MediaService $service,
     ) {}
 
     public function index(): JsonResource

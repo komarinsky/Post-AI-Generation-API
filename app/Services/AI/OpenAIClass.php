@@ -5,7 +5,7 @@ namespace App\Services\AI;
 use OpenAI;
 use OpenAI\Client;
 
-class OpenAIService
+class OpenAIClass
 {
     private Client $client;
 
@@ -23,7 +23,10 @@ class OpenAIService
             'frequency_penalty' => -0.1,
             'presence_penalty' => -0.1,
             'messages' => [
-                ['role' => 'user', 'content' => $content],
+                [
+                    'role' => 'user',
+                    'content' => $content
+                ],
             ],
         ]);
 

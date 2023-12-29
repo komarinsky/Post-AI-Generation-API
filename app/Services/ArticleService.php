@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Services\AI;
+namespace App\Services;
 
-final class ArticleService extends OpenAIService
+use App\Services\AI\OpenAIClass;
+
+final class ArticleService extends OpenAIClass
 {
     public function generateArticle(string $title): string
     {

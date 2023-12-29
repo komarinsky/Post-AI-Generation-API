@@ -22,6 +22,9 @@ final class RegisterUserEmailService implements RegisterUserInterface
         return $user;
     }
 
+    /**
+     * @throws AlreadyInitializedException
+     */
     public function reSend(string $email): void
     {
         $user = User::whereEmail($email)->firstOrFail();

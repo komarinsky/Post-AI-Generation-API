@@ -21,7 +21,7 @@ final class MediaService
         return Media::query()->latest()->paginate(request()->per_page);
     }
 
-    public function update(Media $media, array $input)
+    public function update(Media $media, array $input): Media
     {
         $media->update($input);
 

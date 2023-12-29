@@ -11,7 +11,7 @@ trait HasMedia
 {
     public function scopeWithMedia(Builder $query): void
     {
-        $query->withCount('media');
+        $query->with('media');
     }
 
     public function media(): MorphMany

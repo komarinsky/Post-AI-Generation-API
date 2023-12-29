@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Models\Post;
 use App\QueryBuilders\SortByMostLikeable;
-use App\Services\AI\ArticleService;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
@@ -28,7 +28,7 @@ final class PostService
         return $post->fresh();
     }
 
-    public function getList()
+    public function getList(): LengthAwarePaginator
     {
         $mostLikeable = AllowedSort::custom('most-likeable', new SortByMostLikeable());
 
