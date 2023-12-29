@@ -3,6 +3,9 @@
 namespace App\Services;
 
 use App\Models\Media;
+use App\Models\Post;
+use App\Models\User;
+use App\Notifications\NewMediaNotification;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
