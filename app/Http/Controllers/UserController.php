@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\UsersExport;
 use App\Http\Requests\Media\StoreMediaRequest;
 use App\Http\Resources\MediaResource;
 use App\Http\Resources\UserResource;
@@ -9,6 +10,7 @@ use App\Models\User;
 use App\Services\MediaService;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
@@ -34,5 +36,10 @@ class UserController extends Controller
     public function storeMedia(StoreMediaRequest $request)
     {
         return MediaResource::make($this->mediaService->store(auth()->user(), $request->validated()));
+    }
+
+    public function export()
+    {
+        return Excel::download(new UsersExport(), 'users.xlsx');
     }
 }

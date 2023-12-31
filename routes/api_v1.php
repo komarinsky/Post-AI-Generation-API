@@ -32,8 +32,9 @@ Route::middleware(['api'])->group(function () {
         Route::prefix('users')->group(function () {
             Route::controller(UserController::class)->group(function () {
                 Route::get('/', 'index');
-                Route::get('{user}', 'show');
+                Route::get('export', 'export')->middleware('admin');
                 Route::post('media', 'storeMedia');
+                Route::get('{user}', 'show');
             });
         });
 
