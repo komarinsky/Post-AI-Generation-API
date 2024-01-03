@@ -19,7 +19,7 @@ class MediaResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
-            'path' => Storage::url($this->path),
+            'media_url' => Storage::url($this->path),
         ];
     }
 }
