@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Services\Contracts\RegisterUserInterface;
 use App\Services\RegisterUserEmailService;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -28,6 +29,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Model::shouldBeStrict(! $this->app->isProduction());
     }
 }
