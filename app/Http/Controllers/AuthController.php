@@ -13,10 +13,8 @@ class AuthController extends Controller
     /**
      * @throws AuthenticationException
      */
-    public function login(LoginRequest $request, LoginAction $action): JsonResource
+    public function login(LoginRequest $request, LoginAction $user): JsonResource
     {
-        $user = $action($request->validated());
-
-        return UserResource::make($user)->additional(['token' => $user->token]);
+        return UserResource::make($user())->additional(['token' => $user()->token]);
     }
 }

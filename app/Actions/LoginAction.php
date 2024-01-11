@@ -4,25 +4,19 @@ namespace App\Actions;
 
 use App\Models\User;
 use Illuminate\Auth\AuthenticationException;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 final class LoginAction
 {
     /**
      * @throws AuthenticationException
      */
-    public function __invoke(array $input): User
+    public function __invoke(): User
     {
-        $user = User::query()
-            ->where('email', $input['email'])
-            ->first();
-
-        if (! Hash::check($input['password'], $user->password)) {
-            throw new AuthenticationException();
+        if (Auth::attempt(request()->only('email', 'password'))) {
+            Auth::user()->token = Auth::user()->createToken('auth')->plainTextToken;
         }
 
-        $user->token = $user->createToken('auth')->plainTextToken;
-
-        return $user;
+        return Auth::user();
     }
 }
